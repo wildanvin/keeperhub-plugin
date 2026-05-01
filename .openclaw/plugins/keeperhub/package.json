@@ -1,0 +1,32 @@
+{
+  "name": "@keeperhub/openclaw-plugin",
+  "version": "0.1.0",
+  "description": "OpenClaw plugin that exposes KeeperHub workflow automation tools through KeeperHub MCP.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2",
+      "minGatewayVersion": "2026.3.24-beta.2"
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.21.0",
+    "@sinclair/typebox": "^0.34.41",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "openclaw": "^2026.4.29",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.3.24-beta.2"
+  }
+}

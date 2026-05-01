@@ -1,0 +1,34 @@
+{
+  "id": "keeperhub",
+  "name": "KeeperHub",
+  "description": "Expose KeeperHub workflow automation tools to OpenClaw agents via KeeperHub's remote MCP server.",
+  "version": "0.1.0",
+  "uiHints": {
+    "apiKey": {
+      "label": "KeeperHub API key",
+      "help": "Organisation API key from KeeperHub. Can also be provided with KH_API_KEY.",
+      "placeholder": "kh_...",
+      "sensitive": true
+    },
+    "baseUrl": {
+      "label": "KeeperHub MCP URL",
+      "help": "Override only for development or self-hosted KeeperHub MCP endpoints.",
+      "placeholder": "https://app.keeperhub.com/mcp",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "minLength": 1
+      },
+      "baseUrl": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}
