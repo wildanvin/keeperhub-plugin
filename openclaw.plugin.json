@@ -6,7 +6,7 @@
   "uiHints": {
     "apiKey": {
       "label": "KeeperHub API key",
-      "help": "Organisation API key from KeeperHub. Can also be provided with KH_API_KEY.",
+      "help": "KeeperHub API key. Can also be provided with KH_API_KEY.",
       "placeholder": "kh_...",
       "sensitive": true
     },
