@@ -8,7 +8,7 @@ It connects to:
 https://app.keeperhub.com/mcp
 ```
 
-and authenticates with a KeeperHub API key. A personal API key is fine as long as KeeperHub accepts it for the MCP endpoint. Organization-scoped keys also work.
+and authenticates with a KeeperHub organization API key.
 
 ## What You Get
 
@@ -31,15 +31,15 @@ Before installing, make sure you have:
 
 - OpenClaw installed and configured on the target machine
 - Node.js and npm available in the same WSL/Linux environment where OpenClaw runs
-- A KeeperHub API key, usually starting with `kh_`
+- A KeeperHub organization API key, usually starting with `kh_`
 
-Create or copy your API key from KeeperHub. If you use organization-scoped keys, they are usually under:
+Create the API key in KeeperHub under:
 
 ```text
 Settings > API Keys > Organisation
 ```
 
-If you already have a personal API key, use that.
+Personal API keys are not enough for the KeeperHub MCP endpoint; use an organization API key.
 
 ## Install
 
@@ -50,13 +50,6 @@ cd ~/.openclaw/plugins
 git clone https://github.com/wildanvin/keeperhub-plugin.git keeperhub
 cd keeperhub
 npm install
-cp .env.example .env
-```
-
-Edit `.env` and add your KeeperHub key:
-
-```bash
-KH_API_KEY=kh_your_key_here
 ```
 
 Then link and enable the plugin in OpenClaw:
@@ -73,21 +66,74 @@ You can inspect the installed plugin with:
 openclaw plugins inspect keeperhub
 ```
 
-## Configuration
+## OpenClaw Configuration
 
-The simplest setup is using `.env`:
+For OpenClaw runtime usage, configure the API key in your OpenClaw config file:
 
-```bash
-KH_API_KEY=kh_your_key_here
+```text
+~/.openclaw/openclaw.json
 ```
 
+Add or update the `plugins.entries` section:
+
+```json
+{
+  "plugins": {
+    "entries": {
+      "keeperhub": {
+        "enabled": true,
+        "config": {
+          "apiKey": "kh_your_organization_key_here"
+        }
+      }
+    }
+  }
+}
+```
+
+If your `openclaw.json` already has other plugin entries, keep them and add only the `keeperhub` entry under `plugins.entries`.
+
 Optional endpoint override, only needed for development or self-hosted setups:
+
+```json
+{
+  "plugins": {
+    "entries": {
+      "keeperhub": {
+        "enabled": true,
+        "config": {
+          "apiKey": "kh_your_organization_key_here",
+          "baseUrl": "https://app.keeperhub.com/mcp"
+        }
+      }
+    }
+  }
+}
+```
+
+## Local `.env` For Testing
+
+The plugin still supports `.env` for local testing or quick validation outside a full OpenClaw config setup.
+
+Create one from the example:
+
+```bash
+cp .env.example .env
+```
+
+Then set:
+
+```bash
+KH_API_KEY=kh_your_organization_key_here
+```
+
+Optional endpoint override:
 
 ```bash
 KEEPERHUB_MCP_URL=https://app.keeperhub.com/mcp
 ```
 
-The plugin can also read config from OpenClaw plugin config. If both OpenClaw config and environment variables are present, OpenClaw config wins for `apiKey` and `baseUrl`.
+OpenClaw plugin config wins over `.env` if both are present.
 
 ## Test Without OpenClaw Running
 
